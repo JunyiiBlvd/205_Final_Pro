@@ -1,0 +1,85 @@
+Entity,Code,Year,Cumulative number of large-scale AI models by domain
+All large-scale AI systems,,2017,2
+All large-scale AI systems,,2020,4
+All large-scale AI systems,,2021,13
+All large-scale AI systems,,2022,41
+All large-scale AI systems,,2023,151
+All large-scale AI systems,,2024,278
+All large-scale AI systems,,2025,290
+Audio,,2017,0
+Audio,,2020,0
+Audio,,2021,0
+Audio,,2022,0
+Audio,,2023,3
+Audio,,2024,6
+Audio,,2025,6
+Biology,,2017,0
+Biology,,2020,0
+Biology,,2021,0
+Biology,,2022,1
+Biology,,2023,3
+Biology,,2024,5
+Biology,,2025,7
+Games,,2017,2
+Games,,2020,2
+Games,,2021,2
+Games,,2022,2
+Games,,2023,2
+Games,,2024,2
+Games,,2025,2
+Image generation,,2017,0
+Image generation,,2020,0
+Image generation,,2021,0
+Image generation,,2022,2
+Image generation,,2023,14
+Image generation,,2024,18
+Image generation,,2025,18
+Language,,2017,0
+Language,,2020,2
+Language,,2021,11
+Language,,2022,35
+Language,,2023,128
+Language,,2024,246
+Language,,2025,255
+Mathematics,,2017,0
+Mathematics,,2020,0
+Mathematics,,2021,0
+Mathematics,,2022,0
+Mathematics,,2023,0
+Mathematics,,2024,2
+Mathematics,,2025,2
+Multimodal,,2017,0
+Multimodal,,2020,0
+Multimodal,,2021,1
+Multimodal,,2022,3
+Multimodal,,2023,16
+Multimodal,,2024,39
+Multimodal,,2025,44
+Robotics,,2017,0
+Robotics,,2020,0
+Robotics,,2021,0
+Robotics,,2022,0
+Robotics,,2023,1
+Robotics,,2024,1
+Robotics,,2025,2
+Speech,,2017,0
+Speech,,2020,0
+Speech,,2021,0
+Speech,,2022,1
+Speech,,2023,2
+Speech,,2024,4
+Speech,,2025,4
+Video,,2017,0
+Video,,2020,0
+Video,,2021,0
+Video,,2022,1
+Video,,2023,6
+Video,,2024,15
+Video,,2025,16
+Vision,,2017,0
+Vision,,2020,0
+Vision,,2021,1
+Vision,,2022,3
+Vision,,2023,14
+Vision,,2024,33
+Vision,,2025,37
