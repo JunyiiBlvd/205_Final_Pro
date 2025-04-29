@@ -16,7 +16,7 @@ slide = st.sidebar.radio(
     "Go to",
     [
         "Layoffs and Workforce Dynamics",
-        "Automation Growth",
+        "Automation Growth and AI Progression",
         "AI Advancement",
         "AI Accuracy on Knowledge Tests",
         "Countries Leading the AI Revolution",
@@ -63,7 +63,7 @@ if slide == "Layoffs and Workforce Dynamics":
         x='Year',
         y='Layoffs',
         title='Total Layoffs per Year (2010–2024)',
-        labels={'Layoffs': 'Number of Layoffs', 'Year': 'Year'},
+        labels={'Layoffs': 'Number of Layoffs in Thousands', 'Year': 'Year'},
         markers=True,  # This adds markers at each data point on the line
     )
 
@@ -85,16 +85,78 @@ if slide == "Layoffs and Workforce Dynamics":
     st.plotly_chart(fig, use_container_width=True)
     
     
-elif slide == "Automation Growth":
-    st.header("Dataset 2: Plotly Visualization")
-    
-    df = pd.DataFrame({
-        'x': np.random.rand(50),
-        'y': np.random.rand(50),
-        'size': np.random.randint(10, 100, 50)
+elif slide == "Automation Growth and AI Progression":
+
+    st.header("Countries Leading the AI Revolution")
+    st.write("Use the radio buttons below to switch between different global metrics related to AI and automation.")
+
+# --- Load Patents Dataset ---
+    patents_df = pd.read_csv("artificial-intelligence-patents-submitted-per-million.csv")
+
+# Clean and standardize column names
+    patents_df = patents_df.rename(columns={
+        'Entity': 'Country',
+        'Patent applications per 1 million people - Field: All': 'Value'
     })
-    fig = px.scatter(df, x='x', y='y', size='size', title="Plotly Scatter Plot")
-    st.plotly_chart(fig)
+
+# Drop NaNs and filter recent years
+    patents_df = patents_df.dropna(subset=['Value'])
+
+
+
+    investment_df = pd.read_csv("private-investment-in-artificial-intelligence-cset.csv")
+# Clean and standardize column names
+    investment_df = investment_df.rename(columns={
+        'Entity': 'Country',
+        'Estimated investment - Field: All': 'Value'
+    })
+
+
+    robots_df = pd.read_csv("industrial-robots-annual-installations-total-operational.csv")
+# Clean and standardize column names
+    robots_df = robots_df.rename(columns={
+        'Entity': 'Country',
+        'Annual industrial robots installed': 'Value'
+    })
+
+# --- Radio Button UI ---
+    dataset_choice = st.radio(
+        "Select dataset to view:",
+        ('AI Patent Applications', 'Private Investment in AI', 'Industrial Robots Installed')
+    )
+
+# --- Select dataset to visualize ---
+    if dataset_choice == 'AI Patent Applications':
+        display_df = patents_df
+        title = f"AI-Related Patent Applications per Million"
+    elif dataset_choice == 'Private Investment in AI':
+        display_df = investment_df
+        title = "Private Investment in AI by Country"
+    else:
+        display_df = robots_df
+        title = "Industrial Robots Installed by Country"
+
+    available_years = sorted(display_df['Year'].dropna().unique())
+    selected_year = st.slider("Select Year", int(min(available_years)), int(max(available_years)), int(max(available_years)))
+
+    # --- Filter by selected year ---
+    year_df = display_df[display_df['Year'] == selected_year]
+
+    vmin = year_df['Value'].min()
+    vmax = year_df['Value'].max()
+
+# --- Plot Heatmap ---
+    fig = px.choropleth(
+         year_df,
+        locations="Country",
+        locationmode="country names",
+        color="Value",
+        color_continuous_scale="Reds",
+        range_color=(vmin, vmax),
+        title=f"{title} ({selected_year})"
+    )
+
+    st.plotly_chart(fig, use_container_width=True, height=1000)
     
 elif slide == "AI Advancement":
     st.header("Dataset 3: Folium Map Visualization")
