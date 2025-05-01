@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 
 
 # Page configuration
-st.set_page_config(page_title="AI and Automation Takeover", layout="wide")
+st.set_page_config(page_title="The Race for Intelligence", layout="wide")
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
@@ -17,13 +17,13 @@ slide = st.sidebar.radio(
     "Go to",
     [
         "Layoffs and Workforce Dynamics",
-        "Automation Growth and AI Progression",
+        "Countries Leading the AI Revolution",
         "Annual Industrial Robots Installed",
         "AI Accuracy on Knowledge Tests",
-        "Countries Leading the AI Revolution",
         "Industries Most at Risk"
     ]
 )
+##################################DATA SHOWS THAT AI INVESTMENTS AND PATENTS ARE SKEWED TOWARDS USA WHILE AUTOMATION IS SKEWED TOWARDS CHINA############################
 
 # Page content logic
 st.title("Artificial Intelligence and Automation Takeover")
@@ -86,7 +86,7 @@ if slide == "Layoffs and Workforce Dynamics":
     st.plotly_chart(fig, use_container_width=True)
     
     
-elif slide == "Automation Growth and AI Progression":
+elif slide == "Countries Leading the AI Revolution":
 
     st.header("Countries Leading the AI Revolution")
     st.write("Use the radio buttons below to switch between different global metrics related to AI and automation.")
