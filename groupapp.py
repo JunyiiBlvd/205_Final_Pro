@@ -26,7 +26,7 @@ slide = st.sidebar.radio(
 ##################################DATA SHOWS THAT AI INVESTMENTS AND PATENTS ARE SKEWED TOWARDS USA WHILE AUTOMATION IS SKEWED TOWARDS CHINA############################
 
 # Page content logic
-st.title("Artificial Intelligence and Automation Takeover")
+st.title("The Race for Intelligence")
 
 
 if slide == "Layoffs and Workforce Dynamics":
