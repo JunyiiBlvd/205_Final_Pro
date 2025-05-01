@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 import folium
+import plotly.graph_objects as go
 
 
 
@@ -17,7 +18,7 @@ slide = st.sidebar.radio(
     [
         "Layoffs and Workforce Dynamics",
         "Automation Growth and AI Progression",
-        "AI Advancement",
+        "Industrial",
         "AI Accuracy on Knowledge Tests",
         "Countries Leading the AI Revolution",
         "Industries Most at Risk"
@@ -159,12 +160,95 @@ elif slide == "Automation Growth and AI Progression":
     st.plotly_chart(fig, use_container_width=True, height=1000)
     
 elif slide == "AI Advancement":
-    st.header("Dataset 3: Folium Map Visualization")
-    
-    m = folium.Map(location=[37.7749, -122.4194], zoom_start=12)
-    folium.Marker(location=[37.7749, -122.4194], popup="San Francisco").add_to(m)
-    
-    st.components.v1.html(m._repr_html_(), height=500)
+
+    st.title("Annual Industrial Robots Installed Over Time by Entity")
+
+# Load and sort data
+    df = pd.read_csv('annual-industrial-robots-installed.csv')
+    df = df.sort_values('Year')
+
+# Identify unique entities and sorted years
+    entities = df['Entity'].unique()
+    years = sorted(df['Year'].unique())
+
+# Create initial empty traces for each entity
+    initial_traces = [
+        go.Scatter(x=[], y=[], mode='lines+markers', name=ent)
+        for ent in entities
+    ]
+
+# Build the figure with Play button
+    fig = go.Figure(
+        data=initial_traces,
+        layout=go.Layout(
+            xaxis=dict(range=[years[0], years[-1]], title='Year'),
+            yaxis=dict(
+                range=[
+                    df['Annual industrial robots installed'].min(),
+                    df['Annual industrial robots installed'].max()
+                ],
+                title='Robots Installed'
+            ),
+            updatemenus=[dict(
+                type='buttons',
+                showactive=False,
+                y=1.05,
+                x=1.15,
+                xanchor='right',
+                yanchor='top',
+                buttons=[dict(
+                    label='Play',
+                    method='animate',
+                    args=[None, {
+                        'frame': {'duration': 1000, 'redraw': True},
+                        'transition': {'duration': 300},
+                        'fromcurrent': True
+                    }]
+                )]
+            )]
+        ),
+        frames=[
+            go.Frame(
+                data=[
+                    go.Scatter(
+                        x=df[(df['Entity'] == ent) & (df['Year'] <= year)]['Year'],
+                        y=df[(df['Entity'] == ent) & (df['Year'] <= year)]['Annual industrial robots installed'],
+                        mode='lines+markers',
+                        name=ent
+                    )
+                    for ent in entities
+                ],
+                name=str(year)
+            )
+            for year in years
+        ]
+    )
+
+# Add slider below to show progress
+    fig.update_layout(
+        sliders=[dict(
+            steps=[
+                dict(
+                    method='animate',
+                    args=[[str(year)], {
+                        'mode': 'immediate',
+                        'frame': {'duration': 1000, 'redraw': True},
+                        'transition': {'duration': 300}
+                    }],
+                    label=str(year)
+                )
+                for year in years
+            ],
+            transition={'duration': 0},
+            x=0,
+            y=-0.1,
+            currentvalue={'prefix': 'Year: ', 'font': {'size': 16}},
+            len=1.0
+        )]
+    )
+
+# Render in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 
 # Footer
