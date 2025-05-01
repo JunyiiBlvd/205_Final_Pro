@@ -18,7 +18,7 @@ slide = st.sidebar.radio(
     [
         "Layoffs and Workforce Dynamics",
         "Automation Growth and AI Progression",
-        "Industrial",
+        "Annual Industrial Robots Installed",
         "AI Accuracy on Knowledge Tests",
         "Countries Leading the AI Revolution",
         "Industries Most at Risk"
@@ -159,7 +159,7 @@ elif slide == "Automation Growth and AI Progression":
 
     st.plotly_chart(fig, use_container_width=True, height=1000)
     
-elif slide == "AI Advancement":
+elif slide == "Annual Industrial Robots Installed":
 
     st.title("Annual Industrial Robots Installed Over Time by Entity")
 
@@ -247,8 +247,8 @@ elif slide == "AI Advancement":
         )]
     )
 
-# Render in Streamlit
-st.plotly_chart(fig, use_container_width=True)
+    # Render in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 
 
 # Footer
