@@ -1,0 +1,40 @@
+﻿Year,Perfomance relative to the human baseline (100%),Task
+2012,89.15%,Image classification
+2013,91.42%,Image classification
+2014,96.94%,Image classification
+2015,99.47%,Image classification
+2016,100.74%,Image classification
+2016,80.09%,Visual reasoning
+2017,101.37%,Image classification
+2017,82.35%,Medium-level reading comprehension
+2017,86.49%,Visual reasoning
+2018,102.85%,Image classification
+2018,96.23%,Medium-level reading comprehension
+2018,86.70%,Visual reasoning
+2019,103.75%,Image classification
+2019,36.08%,Multitask language understanding
+2019,103.27%,Medium-level reading comprehension
+2019,94.21%,English language understanding
+2019,90.67%,Visual reasoning
+2020,104.11%,Image classification
+2020,60.02%,Multitask language understanding
+2020,103.92%,Medium-level reading comprehension
+2020,99.44%,English language understanding
+2020,91.38%,Visual reasoning
+2021,104.34%,Image classification
+2021,7.67%,Competition-level mathematics
+2021,66.82%,Multitask language understanding
+2021,104.15%,Medium-level reading comprehension
+2021,101.56%,English language understanding
+2021,102.48%,Visual reasoning
+2022,103.98%,Image classification
+2022,57.56%,Competition-level mathematics
+2022,83.74%,Multitask language understanding
+2022,101.67%,English language understanding
+2022,104.36%,Visual reasoning
+2023,47.78%,PhD-level science questions
+2023,93.67%,Competition-level mathematics
+2023,96.21%,Multitask language understanding
+2023,71.91%,Multimodal understanding and reasoning
+2024,108.00%,PhD-level science questions
+2024,108.78%,Competition-level mathematics
