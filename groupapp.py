@@ -324,6 +324,35 @@ def s3():
 
     # Render in Streamlit
     st.plotly_chart(fig, use_container_width=True)
+
+def s4():
+    df = pd.read_csv("AI-VS-Human.csv")
+
+    # Create line chart
+    fig = px.line(
+        df,
+        x="Year",
+        y="Perfomance relative to the human baseline (100%)",
+        color="Task",
+        markers=True,
+        title="AI Task Performance Over Time (Relative to Human Baseline = 100%)",
+        labels={"Perfomance relative to the human baseline (100%)": "Performance (%)", "Year": "Year", "Task": "Task"},
+    )
+
+    # Add horizontal baseline at 100%
+    fig.add_shape(
+        type="line",
+        x0=df["Year"].min(),
+        x1=df["Year"].max(),
+        y0=100,
+        y1=100,
+        line=dict(color="Red", dash="dash"),
+    )
+
+    fig.update_layout(legend_title="Task")
+
+    # Display in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 ############################################################################################################################################################################
 if slide == "Layoffs and Workforce Dynamics":
     s1()
@@ -333,6 +362,10 @@ elif slide == "Countries Leading the AI Revolution":
     s2()
 elif slide == "Annual Industrial Robots Installed":
     s3()
+elif slide == "AI Accuracy on Knowledge Tests":
+    s4()
+elif slide == "Industries Most at Risk":
+    s4()
 
 # --- Next Button ---
 current_index = slides.index(slide)
