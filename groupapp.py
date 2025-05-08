@@ -16,7 +16,8 @@ slides = [
     "Countries Leading the AI Revolution",
     "Annual Industrial Robots Installed",
     "AI Accuracy on Knowledge Tests",
-    "Industries Most at Risk"
+    "Jobs and Industries Most at Risk",
+    "Key Events Timeline (U.S. vs China)"
 ]
 # --- Session State Navigation Logic ---
 if "current_slide" not in st.session_state:
@@ -190,28 +191,20 @@ def s2():
 
 
     robots_df = pd.read_csv("industrial-robots-annual-installations-total-operational.csv")
-# Clean and standardize column names
-    robots_df = robots_df.rename(columns={
-        'Entity': 'Country',
-        'Annual industrial robots installed': 'Value'
-    })
 
 # --- Radio Button UI ---
     dataset_choice = st.radio(
         "Select dataset to view:",
-        ('AI Patent Applications', 'Private Investment in AI', 'Industrial Robots Installed')
+        ('AI Patent Applications', 'Private Investment in AI')
     )
 
 # --- Select dataset to visualize ---
     if dataset_choice == 'AI Patent Applications':
         display_df = patents_df
         title = f"AI-Related Patent Applications per Million"
-    elif dataset_choice == 'Private Investment in AI':
+    else:
         display_df = investment_df
         title = "Private Investment in AI by Country"
-    else:
-        display_df = robots_df
-        title = "Industrial Robots Installed by Country"
 
     available_years = sorted(display_df['Year'].dropna().unique())
     selected_year = st.slider("Select Year", int(min(available_years)), int(max(available_years)), int(max(available_years)))
@@ -234,12 +227,83 @@ def s2():
     )
 
     st.plotly_chart(fig, use_container_width=True, height=1000)
+
+def s2_1():
+    df = pd.read_csv("CHINA-VS-USA.csv")
+    df["Date"] = pd.to_datetime(df["Date"])
+    # Calculate stats
+    max_gap = df["Performance gap"].max()
+    min_gap = df["Performance gap"].min()
+    median_gap = df["Performance gap"].median()
+
+    # Get the corresponding rows for annotations
+    max_row = df[df["Performance gap"] == max_gap].iloc[0]
+    min_row = df[df["Performance gap"] == min_gap].iloc[0]
+    med_row = df[df["Performance gap"] == median_gap].iloc[0] if median_gap in df["Performance gap"].values else df.iloc[len(df)//2]
+
+    # Create figure
+    fig = go.Figure()
+
+    # China line
+    fig.add_trace(go.Scatter(
+        x=df["Date"], y=df["China model score"],
+        mode='lines+markers', name="China Model",
+        line=dict(color="red")
+    ))
+
+    # U.S. line
+    fig.add_trace(go.Scatter(
+        x=df["Date"], y=df["U.S. model score"],
+        mode='lines+markers', name="U.S. Model",
+        line=dict(color="blue")
+    ))
+
+    # Shaded gap area
+    fig.add_trace(go.Scatter(
+        x=pd.concat([df["Date"], df["Date"][::-1]]),
+        y=pd.concat([df["China model score"], df["U.S. model score"][::-1]]),
+        fill="toself",
+        fillcolor="rgba(100,100,200,0.2)",
+        line=dict(color="rgba(255,255,255,0)"),
+        hoverinfo="skip",
+        name="Performance Gap"
+    ))
+
+    # Add annotations for min, max, and median
+    for row, label, color in zip(
+        [max_row, min_row, med_row],
+        ["Max Gap", "Min Gap", "Median Gap"],
+        ["purple", "green", "orange"]
+    ):
+        fig.add_annotation(
+            x=row["Date"],
+            y=(row["China model score"] + row["U.S. model score"]) / 2,
+            text=f"{label}: {row['Performance gap']}",
+            showarrow=True,
+            arrowhead=1,
+            yshift=10,
+            font=dict(color=color, size=12),
+            bgcolor="white"
+        )
+
+    # Update layout
+    fig.update_layout(
+        title="China vs U.S. AI Model Scores (Performance Gap Highlighted)",
+        xaxis_title="Date",
+        yaxis_title="Model Score",
+        legend_title="Model",
+        hovermode="x unified"
+    )
+
+    # Show in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 ############################################################################################################################################################################
 def s3():
     st.title("Annual Industrial Robots Installed Over Time by Entity")
 
-# Load and sort data
+# Load and clean data
     df = pd.read_csv('annual-industrial-robots-installed.csv')
+    df = df[df['Entity'] != 'World']
     df = df.sort_values('Year')
 
 # Identify unique entities and sorted years
@@ -325,6 +389,41 @@ def s3():
     # Render in Streamlit
     st.plotly_chart(fig, use_container_width=True)
 
+
+def s5():
+    st.header("Key Events Timeline (U.S. vs China)")
+    df = pd.read_csv("ai-race-timeline.csv")
+
+    df = df.sort_values("Year")
+
+    # Create datetime ranges for plotting
+    df["Start"] = pd.to_datetime(df["Year"], format="%Y")
+    df["End"] = df["Start"] + pd.Timedelta(days=365)
+
+
+    # === Plotly Timeline (Color by Type) ===
+    fig = px.timeline(
+        df,
+        x_start="Start",
+        x_end="End",
+        y="Country",
+        color="Type",  # Color by Type, not Country
+        hover_name="Event",
+        hover_data=["Country", "Impact", "Description"],
+        title=f"AI Timeline Events)"
+    )
+    fig.update_yaxes(autorange="reversed")
+    st.plotly_chart(fig, use_container_width=True)
+
+    # === Narrative Breakdown ===
+    st.subheader("Event Breakdown")
+    for _, row in df.iterrows():
+        with st.expander(f"{int(row['Year'])} – {row['Country']}: {row['Event']}"):
+            st.markdown(f"""
+            - **Type**: {row['Type']}
+            - **Impact**: {row['Impact']}
+            - **Description**: {row['Description']}
+            """)
 def s4():
     df = pd.read_csv("AI-VS-Human.csv")
 
@@ -353,6 +452,79 @@ def s4():
 
     # Display in Streamlit
     st.plotly_chart(fig, use_container_width=True)
+
+def s6():
+    st.header("Who’s Most at Risk? AI Job Threat Index")
+
+    # Load and clean data
+    df = pd.read_csv("My_Data.csv")
+    df.columns = [col.strip().replace(" ", "_") for col in df.columns]
+    df['AI_Impact'] = df['AI_Impact'].replace('%', '', regex=True).astype(int)
+
+    # --- Slider to filter by AI Impact threshold ---
+    min_impact = st.slider("Minimum AI Impact to show (Risk Chart)", 0, 100, 50)
+
+    # --- Toggle: Top vs Bottom jobs ---
+    view_mode = st.radio(
+        "Choose job list view:",
+        ["Top 15 Most At-Risk", "Bottom 15 Least At-Risk"]
+    )
+
+    if view_mode == "Top 15 Most At-Risk":
+        filtered_df = df[df["AI_Impact"] >= min_impact]
+        risk_df = filtered_df.sort_values("AI_Impact", ascending=False).head(15)
+        chart_title = f"Top 15 Jobs with AI Impact ≥ {min_impact}%"
+        color_scale = "Reds"
+    else:
+        risk_df = df.sort_values("AI_Impact", ascending=True).head(15)
+        chart_title = "15 Jobs Least Affected by AI"
+        color_scale = "Greens"
+
+    # --- Chart: Risk by Job Title ---
+    st.subheader("📊 Job-Level AI Risk")
+    fig1 = px.bar(
+        risk_df,
+        x="AI_Impact",
+        y="Job_titiles",
+        orientation="h",
+        labels={"AI_Impact": "AI Impact (%)", "Job_titiles": "Job Title"},
+        title=chart_title,
+        color="AI_Impact",
+        color_continuous_scale=color_scale
+    )
+    fig1.update_layout(yaxis=dict(categoryorder='total ascending'))
+    st.plotly_chart(fig1, use_container_width=True)
+
+    # --- Chart: AI Impact by Industry Domain ---
+    st.subheader("🏭 Average AI Impact by Industry")
+    domain_avg = df.groupby("Domain")["AI_Impact"].mean().reset_index().sort_values("AI_Impact", ascending=False)
+
+    fig2 = px.bar(
+        domain_avg,
+        x="Domain",
+        y="AI_Impact",
+        labels={"AI_Impact": "Average AI Impact (%)"},
+        color="AI_Impact",
+        color_continuous_scale="Oranges",
+        title="Industry-Wide Vulnerability to AI"
+    )
+    st.plotly_chart(fig2, use_container_width=True)
+
+    # --- Selectbox to Search Job ---
+    st.subheader("🔍 Look Up Your Job Title")
+    job_selected = st.selectbox("Select a job title:", sorted(df["Job_titiles"].unique()))
+    job_row = df[df["Job_titiles"] == job_selected].iloc[0]
+
+    st.markdown(f"""
+    **Job Title**: {job_row['Job_titiles']}  
+    **AI Impact**: {job_row['AI_Impact']}%  
+    **# of Tasks**: {job_row['Tasks']}  
+    **# of AI Models**: {job_row['AI_models']}  
+    **AI Workload Ratio**: {job_row['AI_Workload_Ratio']}  
+    **Domain**: {job_row['Domain']}
+    """)
+
+
 ############################################################################################################################################################################
 if slide == "Layoffs and Workforce Dynamics":
     s1()
@@ -360,12 +532,15 @@ if slide == "Layoffs and Workforce Dynamics":
     s1_2('employment-projections.csv')
 elif slide == "Countries Leading the AI Revolution":
     s2()
+    s2_1()
 elif slide == "Annual Industrial Robots Installed":
     s3()
 elif slide == "AI Accuracy on Knowledge Tests":
     s4()
-elif slide == "Industries Most at Risk":
-    s4()
+elif slide == "Jobs and Industries Most at Risk":
+    s6()
+elif slide == "Key Events Timeline (U.S. vs China)":
+    s5()
 
 # --- Next Button ---
 current_index = slides.index(slide)
@@ -373,6 +548,7 @@ if current_index < len(slides) - 1:
     if st.button("Next"):
         st.session_state.current_slide = slides[current_index + 1]
         st.rerun()
+
 
 
 # Footer
