@@ -1,0 +1,19 @@
+﻿Year,Country,Event,Type,Impact
+2017,China,China announces AI Development Plan to lead AI by 2030,Policy,High
+2018,China,"Baidu releases Ernie 1.0, early Chinese language model",Model Release,Low
+2020,China,"Huawei launches MindSpore, an AI framework alternative to TensorFlow",Infrastructure,Medium
+2021,China,"Baidu releases Ernie 3.0, competitive transformer model",Model Release,Medium
+2022,China,"SenseTime releases SenseChat, China’s GPT-style chatbot",Model Release,Medium
+2023,China,"Huawei releases Pangu 2.0, LLM focused on science and finance",Model Release,Medium
+2023,China,Government rolls out AI regulation for content and ethics,Regulation,Medium
+2024,China,China imposes export ban on AI chips to U.S.,Policy,Medium
+2024,China,"Baidu launches Ernie Bot 4.0, claimed GPT-4 competitor",Model Release,High
+2018,USA,"OpenAI releases GPT-1, first transformer-based language model",Model Release,Low
+2019,USA,"GPT-2 released, first widely impactful transformer",Model Release,Medium
+2020,USA,"GPT-3 released, marks jump in model scale and capability",Model Release,High
+2021,USA,Microsoft invests $1B in OpenAI,Investment,High
+2022,USA,OpenAI releases DALL·E 2 and Whisper,Model Release,Medium
+2022,USA,"Google DeepMind introduces Gato, a generalist agent",Model Release,Medium
+2023,USA,"ChatGPT launched, mainstreams generative AI",Industry Adoption,Very High
+2023,USA,Biden Executive Order on AI Safety & Civil Rights,Regulation,Medium
+2024,USA,OpenAI and Microsoft reach $10B partnership,Investment,High
