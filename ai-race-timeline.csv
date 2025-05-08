@@ -1,19 +1,19 @@
 ﻿Year,Country,Event,Type,Impact,Description
-2017,China,China announces AI Development Plan to lead AI by 2030,Policy,High,The Chinese State Council set a goal to become the world leader in AI by 2030, allocating massive government funding to AI infrastructure and research.
-2018,China,"Baidu releases Ernie 1.0, early Chinese language model",Model Release,Low,Baidu introduces Ernie 1.0, an early transformer-based language model for Chinese NLP.
-2020,China,"Huawei launches MindSpore, an AI framework alternative to TensorFlow",Infrastructure,Medium,Huawei debuts MindSpore, an open-source AI framework intended as an alternative to TensorFlow and PyTorch, optimized for edge and cloud.
+2017,China,China announces AI Development Plan to lead AI by 2030,Policy,High,The Chinese State Council set a goal to become the world leader in AI by 2030. Allocating massive government funding to AI infrastructure and research.
+2018,China,"Baidu releases Ernie 1.0, early Chinese language model",Model Release,Low,Baidu introduces Ernie 1.0 an early transformer-based language model for Chinese NLP.
+2020,China,"Huawei launches MindSpore, an AI framework alternative to TensorFlow",Infrastructure,Medium,Huawei debuts MindSpore an open-source AI framework intended as an alternative to TensorFlow and PyTorch. Optimized for edge and cloud.
 2021,China,"Baidu releases Ernie 3.0, competitive transformer model",Model Release,Medium,Ernie 3.0 competes with Western models in size and multilingual training for Chinese applications.
-2022,China,"SenseTime releases SenseChat, China’s GPT-style chatbot",Model Release,Medium,SenseTime develops SenseChat, a Chinese chatbot similar to GPT, focusing on language and image generation.
-2023,China,"Huawei releases Pangu 2.0, LLM focused on science and finance",Model Release,Medium,Huawei launches Pangu 2.0, a foundational model for scientific and industrial AI use cases.
+2022,China,"SenseTime releases SenseChat, China’s GPT-style chatbot",Model Release,Medium,SenseTime develops SenseChat a Chinese chatbot similar to GPT. It focuses on language and image generation.
+2023,China,"Huawei releases Pangu 2.0, LLM focused on science and finance",Model Release,Medium,Huawei launches Pangu 2.0 A foundational model for scientific and industrial AI use cases.
 2023,China,Government rolls out AI regulation for content and ethics,Regulation,Medium,China's Cyberspace Administration rolls out rules requiring AI providers to ensure content aligns with socialist values and national security.
-2024,China,China imposes export ban on AI chips to U.S.,Policy,Medium,In response to U.S. sanctions, China restricts export of key AI chips and rare-earth materials used in chip production.
-2024,China,"Baidu launches Ernie Bot 4.0, claimed GPT-4 competitor",Model Release,High,Ernie Bot 4.0 is presented as a direct competitor to GPT-4, enhancing Baidu's presence in the LLM race.
+2024,China,China imposes export ban on AI chips to U.S.,Policy,Medium,In response to U.S. sanctions China restricts export of key AI chips and rare-earth materials used in chip production.
+2024,China,"Baidu launches Ernie Bot 4.0, claimed GPT-4 competitor",Model Release,High,Ernie Bot 4.0 is presented as a direct competitor to GPT-4 thus enhancing Baidu's presence in the LLM race.
 2018,USA,"OpenAI releases GPT-1, first transformer-based language model",Model Release,Low,GPT-1 introduces the transformer-based language model architecture and sets the stage for future breakthroughs.
-2019,USA,"GPT-2 released, first widely impactful transformer",Model Release,Medium,GPT-2 shows that language models trained on large datasets can generate surprisingly coherent text, sparking safety debates.
-2020,USA,"GPT-3 released, marks jump in model scale and capability",Model Release,High,GPT-3 gains global attention for its language capabilities, powering early use cases in writing, coding, and conversation.
-2021,USA,Microsoft invests $1B in OpenAI,Investment,High,Microsoft deepens its partnership with OpenAI, securing Azure as the exclusive cloud platform and gaining model access.
-2022,USA,OpenAI releases DALL·E 2 and Whisper,Model Release,Medium,OpenAI launches text-to-image model DALL·E 2 and automatic speech recognition system Whisper, broadening AI capabilities.
-2022,USA,"Google DeepMind introduces Gato, a generalist agent",Model Release,Medium,Gato is a generalist AI agent capable of performing multiple tasks using a single neural network — a step toward general AI.
-2023,USA,"ChatGPT launched, mainstreams generative AI",Industry Adoption,Very High,OpenAI’s ChatGPT reaches over 100M users in 2 months, introducing generative AI to the mainstream and driving global competition.
-2023,USA,Biden Executive Order on AI Safety & Civil Rights,Regulation,Medium,U.S. government orders federal agencies to ensure AI safety, civil rights, and innovation leadership.
-2024,USA,OpenAI and Microsoft reach $10B partnership,Investment,High,Microsoft makes a $10B investment in OpenAI to integrate GPT into Office, Azure, and its core products.
+2019,USA,"GPT-2 released, first widely impactful transformer",Model Release,Medium,GPT-2 shows that language models trained on large datasets can generate surprisingly coherent text and sparking safety debates.
+2020,USA,"GPT-3 released, marks jump in model scale and capability",Model Release,High,GPT-3 gains global attention for its language capabilities.
+2021,USA,Microsoft invests $1B in OpenAI,Investment,High,Microsoft deepens its partnership with OpenAI securing Azure as the exclusive cloud platform and gaining model access.
+2022,USA,OpenAI releases DALL·E 2 and Whisper,Model Release,Medium,OpenAI launches text-to-image model DALL·E 2 and automatic speech recognition system Whisper broadening AI capabilities.
+2022,USA,"Google DeepMind introduces Gato, a generalist agent",Model Release,Medium,Gato is a generalist AI agent capable of performing multiple tasks using a single neural network a step toward general AI.
+2023,USA,"ChatGPT launched, mainstreams generative AI",Industry Adoption,Very High,OpenAI’s ChatGPT reaches over 100M users in 2 months introducing generative AI to the mainstream and driving global competition.
+2023,USA,Biden Executive Order on AI Safety & Civil Rights,Regulation,Medium,U.S. government orders federal agencies to ensure AI safety civil rights and innovation leadership.
+2024,USA,OpenAI and Microsoft reach $10B partnership,Investment,High,Microsoft makes a $10B investment in OpenAI to integrate GPT into Office Azure and its core products.
