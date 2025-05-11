@@ -13,11 +13,11 @@ st.set_page_config(page_title="The Race for Intelligence", layout="wide")
 # Define all slide names in order
 slides = [
     "Layoffs and Workforce Dynamics",
+    "Jobs and Industries Most at Risk",
     "Annual Industrial Robots Installed",
     "Countries Leading the AI Revolution",
     "Key Events Timeline (U.S. vs China)",
-    "AI Accuracy on Knowledge Tests",
-    "Jobs and Industries Most at Risk"
+    "AI Development and Prevalence"
 ]
 # --- Session State Navigation Logic ---
 if "current_slide" not in st.session_state:
@@ -41,7 +41,7 @@ st.title("The Race for Intelligence")
 ############################################################################################################################################################################
 def s1():
     st.header("Layoffs and Workforce Dynamics")
-    st.write("Below")
+    st.write("Many country wide events have occured and have led to increased layoffs. Hovering over each bubble will show the event most correlated to the that years layoffs.")
 
 
     # Load dataset
@@ -92,6 +92,7 @@ def s1():
     st.plotly_chart(fig, use_container_width=True)
 ###########################################################################################################################################
 def s1_1(file_path, top_n):
+    st.write("Some jobs have seen immense growth despite the AI boom.")
     df = clean_employment_data(file_path)
 
     top_jobs = df.sort_values("Percent change, 2023-33", ascending=False).head(top_n)
@@ -230,6 +231,7 @@ def s2():
     st.plotly_chart(fig, use_container_width=True, height=1000)
 ###########################################################################################################################################
 def s2_1():
+    st.write("America has been dominating the global AI race, however China is quickly catching up.")
     df = pd.read_csv("CHINA-VS-USA.csv")
     df["Date"] = pd.to_datetime(df["Date"])
     # Calculate stats
@@ -301,7 +303,7 @@ def s2_1():
 ############################################################################################################################################################################
 def s3():
     st.title("Annual Industrial Robots Installed Over Time by Entity")
-
+    st.write("China has been dominating the automation sector for many years and will continue to do so if predictions are true.")
 # Load and clean data
     df = pd.read_csv('annual-industrial-robots-installed.csv')
     df = df[df['Entity'] != 'World']
@@ -393,6 +395,7 @@ def s3():
 ###########################################################################################################################################
 def s5():
     st.header("Key Events Timeline (U.S. vs China)")
+    st.write("Throughout the years many events have shaped the global stage for the battle between these two superpowers for AI and automation supremacy. Hover over each block or click the drop down menus to see the biggest events.")
     df = pd.read_csv("ai-race-timeline.csv")
 
     df = df.sort_values("Year")
@@ -428,6 +431,7 @@ def s5():
             ###########################################################################################################################################
 def s4():
     df = pd.read_csv("AI-VS-Human.csv")
+    st.write("From humble beginnings AI is slowly becoming better than its creators at tasks given to it. The dotted black line is a human baseline.")
 
     # Create line chart
     fig = px.line(
@@ -447,7 +451,7 @@ def s4():
         x1=df["Year"].max(),
         y0=100,
         y1=100,
-        line=dict(color="Red", dash="dash"),
+        line=dict(color="Black", dash="dash"),
     )
 
     fig.update_layout(legend_title="Task")
@@ -483,7 +487,7 @@ def s6():
         color_scale = "Greens"
 
     # --- Chart: Risk by Job Title ---
-    st.subheader("📊 Job-Level AI Risk")
+    st.subheader("Job-Level AI Risk")
     fig1 = px.bar(
         risk_df,
         x="AI_Impact",
@@ -498,7 +502,7 @@ def s6():
     st.plotly_chart(fig1, use_container_width=True)
 
     # --- Chart: AI Impact by Industry Domain ---
-    st.subheader("🏭 Average AI Impact by Industry")
+    st.subheader("Average AI Impact by Industry")
     domain_avg = df.groupby("Domain")["AI_Impact"].mean().reset_index().sort_values("AI_Impact", ascending=False)
 
     fig2 = px.bar(
@@ -513,7 +517,7 @@ def s6():
     st.plotly_chart(fig2, use_container_width=True)
 
     # --- Selectbox to Search Job ---
-    st.subheader("🔍 Look Up Your Job Title")
+    st.subheader("Look Up Your Job Title")
     job_selected = st.selectbox("Select a job title:", sorted(df["Job_titiles"].unique()))
     job_row = df[df["Job_titiles"] == job_selected].iloc[0]
 
@@ -528,6 +532,7 @@ def s6():
     ###########################################################################################################################################
 def s7():
     ai = pd.read_csv('The Rise Of Artificial Intellegence2.csv')
+    st.write("With billions being funnelled into AI, many organizations are using AI and it continues to increase every year.")
 
     ai['Organizations Using AI'] = ai['Organizations Using AI'].str.replace('%','')
     ai['Organizations Planning to Implement AI'] = ai['Organizations Planning to Implement AI'].str.replace('%','')
@@ -537,7 +542,6 @@ def s7():
     ai['Expected Increase in Employee Productivity Due to AI (%)'] = ai['Expected Increase in Employee Productivity Due to AI (%)'].str.replace('%','')
     ai['Net Job Loss in the US'] = ai['Net Job Loss in the US'].str.replace('%','')
 
-    st.write('YungSherman')
 
     fig = px.line(
         ai,
@@ -584,7 +588,7 @@ elif slide == "Countries Leading the AI Revolution":
     s2_1()
 elif slide == "Annual Industrial Robots Installed":
     s3()
-elif slide == "AI Development and Prevelence":
+elif slide == "AI Development and Prevalence":
     s7()
     s4()
 elif slide == "Jobs and Industries Most at Risk":
