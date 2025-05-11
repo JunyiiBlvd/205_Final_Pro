@@ -13,11 +13,11 @@ st.set_page_config(page_title="The Race for Intelligence", layout="wide")
 # Define all slide names in order
 slides = [
     "Layoffs and Workforce Dynamics",
-    "Countries Leading the AI Revolution",
     "Annual Industrial Robots Installed",
+    "Countries Leading the AI Revolution",
+    "Key Events Timeline (U.S. vs China)",
     "AI Accuracy on Knowledge Tests",
-    "Jobs and Industries Most at Risk",
-    "Key Events Timeline (U.S. vs China)"
+    "Jobs and Industries Most at Risk"
 ]
 # --- Session State Navigation Logic ---
 if "current_slide" not in st.session_state:
@@ -34,7 +34,6 @@ st.session_state.current_slide = st.sidebar.radio(
 # Assign current slide
 slide = st.session_state.current_slide
 
-##################################DATA SHOWS THAT AI INVESTMENTS AND PATENTS ARE SKEWED TOWARDS USA WHILE AUTOMATION IS SKEWED TOWARDS CHINA############################
 
 # Page content logic
 st.title("The Race for Intelligence")
@@ -42,7 +41,7 @@ st.title("The Race for Intelligence")
 ############################################################################################################################################################################
 def s1():
     st.header("Layoffs and Workforce Dynamics")
-    st.write("Explore layoff trends and workforce dynamics in the age of AI and automation.")
+    st.write("Below")
 
 
     # Load dataset
@@ -91,6 +90,7 @@ def s1():
 
     # Show the plot
     st.plotly_chart(fig, use_container_width=True)
+###########################################################################################################################################
 def s1_1(file_path, top_n):
     df = clean_employment_data(file_path)
 
@@ -106,6 +106,7 @@ def s1_1(file_path, top_n):
     )
     fig.update_layout(yaxis={'categoryorder': 'total ascending'})
     st.plotly_chart(fig, use_container_width=True)
+    ###########################################################################################################################################
 def s1_2(file_path):
     df = clean_employment_data(file_path)
     # Normalize bubble size (projected employment)
@@ -131,7 +132,7 @@ def s1_2(file_path):
     st.plotly_chart(fig, use_container_width=True)
 
 
-
+###########################################################################################################################################
 def clean_employment_data(file_path):
     df = pd.read_csv(file_path)
 
@@ -227,7 +228,7 @@ def s2():
     )
 
     st.plotly_chart(fig, use_container_width=True, height=1000)
-
+###########################################################################################################################################
 def s2_1():
     df = pd.read_csv("CHINA-VS-USA.csv")
     df["Date"] = pd.to_datetime(df["Date"])
@@ -389,7 +390,7 @@ def s3():
     # Render in Streamlit
     st.plotly_chart(fig, use_container_width=True)
 
-
+###########################################################################################################################################
 def s5():
     st.header("Key Events Timeline (U.S. vs China)")
     df = pd.read_csv("ai-race-timeline.csv")
@@ -424,6 +425,7 @@ def s5():
             - **Impact**: {row['Impact']}
             - **Description**: {row['Description']}
             """)
+            ###########################################################################################################################################
 def s4():
     df = pd.read_csv("AI-VS-Human.csv")
 
@@ -452,7 +454,7 @@ def s4():
 
     # Display in Streamlit
     st.plotly_chart(fig, use_container_width=True)
-
+###########################################################################################################################################
 def s6():
     st.header("Who’s Most at Risk? AI Job Threat Index")
 
@@ -523,6 +525,53 @@ def s6():
     **AI Workload Ratio**: {job_row['AI_Workload_Ratio']}  
     **Domain**: {job_row['Domain']}
     """)
+    ###########################################################################################################################################
+def s7():
+    ai = pd.read_csv('The Rise Of Artificial Intellegence2.csv')
+
+    ai['Organizations Using AI'] = ai['Organizations Using AI'].str.replace('%','')
+    ai['Organizations Planning to Implement AI'] = ai['Organizations Planning to Implement AI'].str.replace('%','')
+    ai['Organizations Believing AI Provides Competitive Edge'] = ai['Organizations Believing AI Provides Competitive Edge'].str.replace('%','')
+    ai['Medical Professionals Using AI for Diagnosis'] = ai['Medical Professionals Using AI for Diagnosis'].str.replace('%','')
+    ai['Global Expectation for AI Adoption (%)'] = ai['Global Expectation for AI Adoption (%)'].str.replace('%','')
+    ai['Expected Increase in Employee Productivity Due to AI (%)'] = ai['Expected Increase in Employee Productivity Due to AI (%)'].str.replace('%','')
+    ai['Net Job Loss in the US'] = ai['Net Job Loss in the US'].str.replace('%','')
+
+    st.write('YungSherman')
+
+    fig = px.line(
+        ai,
+        x = 'Year',
+        y = ['AI Software Revenue(in Billions)',
+         'Global AI Market Value(in Billions)'],
+        markers = True,
+        title = 'The Value of Aritifical Intelligence'
+    )
+
+    fig.update_layout(
+        yaxis_title = 'Value (Billions $)',
+        yaxis_range = [0,2000]
+    )
+
+    st.plotly_chart(fig)
+
+    fig1 = px.line(
+        ai,
+        x = 'Year',
+        y = ['Organizations Using AI',
+        'Organizations Planning to Implement AI',
+        'Medical Professionals Using AI for Diagnosis',
+        'Expected Increase in Employee Productivity Due to AI (%)'],
+        title = 'AI in the Field',
+        markers = True
+    )
+
+    fig1.update_layout(
+        yaxis_title = 'Percentage (%)',
+        yaxis_range = [0,70]
+    )
+
+    st.plotly_chart(fig1)
 
 
 ############################################################################################################################################################################
@@ -535,7 +584,8 @@ elif slide == "Countries Leading the AI Revolution":
     s2_1()
 elif slide == "Annual Industrial Robots Installed":
     s3()
-elif slide == "AI Accuracy on Knowledge Tests":
+elif slide == "AI Development and Prevelence":
+    s7()
     s4()
 elif slide == "Jobs and Industries Most at Risk":
     s6()
