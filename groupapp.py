@@ -41,7 +41,7 @@ st.title("The Race for Intelligence")
 ############################################################################################################################################################################
 def s1():
     st.header("Layoffs and Workforce Dynamics")
-    st.write("Many country wide events have occured and have led to increased layoffs. Hovering over each bubble will show the event most correlated to the that years layoffs.")
+    st.subheader("Many country wide events have occured and have led to increased layoffs. Hovering over each bubble will show the event most correlated to the that years layoffs.")
 
 
     # Load dataset
@@ -92,7 +92,7 @@ def s1():
     st.plotly_chart(fig, use_container_width=True)
 ###########################################################################################################################################
 def s1_1(file_path, top_n):
-    st.write("Some jobs have seen immense growth despite the AI boom.")
+    st.subheader("Some jobs have seen immense growth despite the AI boom.")
     df = clean_employment_data(file_path)
 
     top_jobs = df.sort_values("Percent change, 2023-33", ascending=False).head(top_n)
@@ -168,7 +168,7 @@ def clean_employment_data(file_path):
 ############################################################################################################################################################################
 def s2():
     st.header("Countries Leading the AI Revolution")
-    st.write("Use the radio buttons below to switch between different global metrics related to AI and automation.")
+    st.subheader("Use the radio buttons below to switch between different global metrics related to AI and automation.")
 
 # --- Load Patents Dataset ---
     patents_df = pd.read_csv("artificial-intelligence-patents-submitted-per-million.csv")
@@ -231,7 +231,7 @@ def s2():
     st.plotly_chart(fig, use_container_width=True, height=1000)
 ###########################################################################################################################################
 def s2_1():
-    st.write("America has been dominating the global AI race, however China is quickly catching up.")
+    st.subheader("America has been dominating the global AI race, however China is quickly catching up.")
     df = pd.read_csv("CHINA-VS-USA.csv")
     df["Date"] = pd.to_datetime(df["Date"])
     # Calculate stats
@@ -303,7 +303,7 @@ def s2_1():
 ############################################################################################################################################################################
 def s3():
     st.title("Annual Industrial Robots Installed Over Time by Entity")
-    st.write("China has been dominating the automation sector for many years and will continue to do so if predictions are true.")
+    st.subheader("China has been dominating the automation sector for many years and will continue to do so if predictions are true.")
 # Load and clean data
     df = pd.read_csv('annual-industrial-robots-installed.csv')
     df = df[df['Entity'] != 'World']
@@ -395,7 +395,7 @@ def s3():
 ###########################################################################################################################################
 def s5():
     st.header("Key Events Timeline (U.S. vs China)")
-    st.write("Throughout the years many events have shaped the global stage for the battle between these two superpowers for AI and automation supremacy. Hover over each block or click the drop down menus to see the biggest events.")
+    st.subheader("Throughout the years many events have shaped the global stage for the battle between these two superpowers for AI and automation supremacy. Hover over each block or click the drop down menus to see the biggest events.")
     df = pd.read_csv("ai-race-timeline.csv")
 
     df = df.sort_values("Year")
@@ -431,7 +431,7 @@ def s5():
             ###########################################################################################################################################
 def s4():
     df = pd.read_csv("AI-VS-Human.csv")
-    st.write("From humble beginnings AI is slowly becoming better than its creators at tasks given to it. The dotted black line is a human baseline.")
+    st.subheader("From humble beginnings AI is slowly becoming better than its creators at tasks given to it. The dotted black line is a human baseline.")
 
     # Create line chart
     fig = px.line(
@@ -531,8 +531,10 @@ def s6():
     """)
     ###########################################################################################################################################
 def s7():
+
+
     ai = pd.read_csv('The Rise Of Artificial Intellegence2.csv')
-    st.write("With billions being funnelled into AI, many organizations are using AI and it continues to increase every year.")
+    st.subheader("With billions being funnelled into AI, many organizations are using AI and it continues to increase every year.")
 
     ai['Organizations Using AI'] = ai['Organizations Using AI'].str.replace('%','')
     ai['Organizations Planning to Implement AI'] = ai['Organizations Planning to Implement AI'].str.replace('%','')
@@ -578,6 +580,67 @@ def s7():
     st.plotly_chart(fig1)
 
 
+def load_data():
+    df = pd.read_csv('The Rise Of Artificial Intellegence2.csv')
+    df = df.sort_values('Year')
+    # Convert percent strings → floats
+    pct_cols = [
+        'Organizations Planning to Implement AI',
+        'Organizations Using AI',
+        'Global Expectation for AI Adoption (%)'
+    ]
+    for col in pct_cols:
+        df[col] = df[col].str.rstrip('%').astype(float)
+    return df
+
+def s8():
+    df       = load_data()
+    years    = df['Year'].astype(str)
+    planning = df['Organizations Planning to Implement AI']
+    using    = df['Organizations Using AI']
+    expect   = df['Global Expectation for AI Adoption (%)']
+    st.subheader("Companies are deciding that it is time to move from human powered labor to mechanical labor.")
+
+    # 2. UI selector
+    choice = st.radio(
+        "Choose a chart:",
+        ("Implementation & Adoption", "Expectation ")
+    )
+
+    if choice == "Implementation & Adoption":
+        # 3a. Grouped bar chart (side-by-side)
+        x     = range(len(years))
+        width = 0.4
+
+        fig, ax = plt.subplots()
+        ax.bar([i - width/2 for i in x], planning, width, label='Planning to Implement AI')
+        ax.bar([i + width/2 for i in x], using,    width, label='Using AI ')
+
+        # 4a. Styling
+        ax.set_xticks(x)
+        ax.set_xticklabels(years, rotation=45)
+        ax.set_ylim(0, 100)  # clamp to 0–100%
+        ax.set_xlabel('Year')
+        ax.set_ylabel('Organizations (%)')
+        ax.set_title('Percentage of Organizations Planning vs. Using AI')
+        ax.legend()
+        plt.tight_layout()
+        st.pyplot(fig)
+
+    else:
+        # 3b. Simple line chart
+        fig, ax = plt.subplots()
+        ax.plot(years, expect, marker='o', linestyle='-', label='Global Expectation for AI Adoption ')
+
+        # 4b. Styling
+        ax.set_xticklabels(years, rotation=45)
+        ax.set_ylim(0, 100)
+        ax.set_xlabel('Year')
+        ax.set_ylabel('Expectation (%)')
+        ax.set_title('Global Expectation for AI Adoption by Year')
+        ax.legend()
+        plt.tight_layout()
+        st.pyplot(fig)
 ############################################################################################################################################################################
 if slide == "Layoffs and Workforce Dynamics":
     s1()
@@ -588,6 +651,7 @@ elif slide == "Countries Leading the AI Revolution":
     s2_1()
 elif slide == "Annual Industrial Robots Installed":
     s3()
+    s8()
 elif slide == "AI Development and Prevalence":
     s7()
     s4()
